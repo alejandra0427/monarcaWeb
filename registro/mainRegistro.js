@@ -6,7 +6,6 @@ window.addEventListener('load',()=>{
     const email = document.getElementById('email');
     const direccion = document.getElementById('direccion');
     const contraseña = document.getElementById('contraseña');
-
     const boton= document.getElementById('botonEnviar');
 
     boton.addEventListener('click',async (e)=>{

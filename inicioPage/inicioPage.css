@@ -34,20 +34,107 @@
 
 .container{
   
-    width: 2395px;
-    height:1186px;
+    width: 1918px;
+    height:951px;
     background: var(--light-grayish-blue);
     justify-content: space-between;
     align-items: center;
-    
+    background-image: url(./monarca4.jpg);
+
 }
 
-#imagen{
+/* estilos.css */
+body {
+   display: flex;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fff8f0;
+}
 
-    width: 2395px;
-    height: 160px;
-border: 3px solid black;
-    background-image: url(/inicioPage/monarca1.jpg);
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-image: url('fondo-madera.jpg');
+  background-size: cover;
+  color: white;
+}
+
+.logo {
+  width: 900px;
+  height: 200px;
+  margin-right: 1rem;
+  margin-left: 150px;
+  border-radius: 20px;
+}
+
+.titulo h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.estado {
+  margin-top: 0.2rem;
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.info-contacto {
+  margin-left: auto;
+  text-align: right;
+}
+
+.navegacion ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border-bottom: 2px solid #ccc;
+  margin: 0;
+}
+
+.navegacion li {
+  margin: 0 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-bottom: 3px solid transparent;
+}
+
+.navegacion .activo {
+  border-bottom: 3px solid orange;
+  font-weight: bold;
+}
 
 
+
+
+
+#container{
+
+  width: 1250px
+
+}
+
+.inactive{
+
+  display: none;
+}
+
+#contenedorCervezas{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 10px;
+  justify-content: center;
+
+  
+  margin-top: 50px;
+}
+.cervezas{
+
+  width: 25%;
+  height: 300px;
+  border: solid gray 3px;
 }

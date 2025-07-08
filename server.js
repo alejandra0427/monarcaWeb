@@ -23,6 +23,19 @@ app.get('/usuarios', async (req, res)=>{
     }
 });
 
+app.get('/productos', async (req, res)=>{
+
+    try{
+
+        const [resultsProductos] = await pool.query('SELECT id_producto, tipo_producto, nombre_producto, valor_producto, imagen_producto FROM productos');
+        res.json(resultsProductos);
+    }catch(err){
+
+        console.error('Error en la base de datos', err);
+        res.status(500).send('Error en la base de datos');
+    }
+});
+
 app.post('/usuarios', async (req, res)=>{
 
     try{

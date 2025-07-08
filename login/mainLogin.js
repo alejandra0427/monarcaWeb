@@ -1,6 +1,6 @@
 window.addEventListener('load',()=>{
     
-    console.log('conectado');
+
     
     const email = document.getElementById('email');
     const password = document.getElementById('password');
@@ -9,7 +9,7 @@ window.addEventListener('load',()=>{
     
     
     boton.addEventListener('click',async (e)=>{
-        console.log('funciona');
+       
         
         e.preventDefault();
 

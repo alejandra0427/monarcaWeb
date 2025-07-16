@@ -7,9 +7,21 @@ console.log('funcionando');
 
 const contenedorCervezas = document.getElementById('contenedorCervezas');
 const contenedorAguardiente = document.getElementById('contenedorAguardiente');
-const btnCerveza = document.getElementById('btnCerveza');
-const btnAguardiente= document.getElementById('btnAguardiente')
+const cajaInformacion = document.getElementById('cajaInformacion');
+const cajaDetalleProducto = document.getElementById('cajaDetalleProducto');
 
+const btnCerveza = document.getElementById('btnCerveza');
+const btnAguardiente= document.getElementById('btnAguardiente');
+
+function closeModal (){
+
+    cajaInformacion.style.display= 'none';
+}
+
+function openModal (){
+
+    cajaInformacion.style.display ='flex';
+}
 
 async function carga () {
     
@@ -41,6 +53,31 @@ async function carga () {
 
             contenedorCervezas.appendChild(cajaCerveza);
 
+            const copiaCajaCerveza = cajaCerveza.cloneNode(true)
+            
+            cajaCerveza.addEventListener('click',()=>{
+
+                openModal();
+
+                
+                
+                cajaDetalleProducto.appendChild(copiaCajaCerveza);
+                
+
+            });
+
+            window.addEventListener('click', (event)=>{
+
+        if(event.target === cajaInformacion){
+
+            closeModal();
+
+            cajaDetalleProducto.removeChild(copiaCajaCerveza);
+            
+        }
+      });
+
+
             }else if(String(producto.tipo_producto ==='Aguardiente')){
 
                 
@@ -67,7 +104,8 @@ async function carga () {
 
         }
        
-       
+      
+
 
         
     }catch (err){

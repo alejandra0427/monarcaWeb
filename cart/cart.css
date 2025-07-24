@@ -1,0 +1,62 @@
+@font-face {
+    font-family:"inter";
+    src: url(fonts/Inter/Inter-Italic-VariableFont_opsz\,wght.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family:"Open_sans" ;
+    src: url(fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth\,wght.ttf);
+    font-weight: normal;
+    font-style: normal;
+}    
+
+
+:root{
+
+ --dark-brown: hsl(25, 77%, 39%);
+--lime-green: hsl(136, 65%, 51%);
+--bright-cyan: hsl(192, 70%, 51%);
+--grayish-blue: hsl(233, 8%, 62%);
+--light-grayish-blue: hsl(220, 16%, 96%);
+--very-light-gray: hsl(0, 0%, 98%);
+--white: hsl(0, 0%, 100%);
+--lightorange: hsl(29, 55%, 64%);
+
+}
+
+*{
+
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+  
+    width: 1918px;
+    
+    background: var(--light-grayish-blue);
+    justify-content: space-between;
+    align-items: center;
+    background-image: url(./monarca4.jpg);
+
+}
+
+/* estilos.css */
+body {
+   display: flex;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fff8f0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-image: url('fondo-madera.jpg');
+  background-size: cover;
+  color: white;
+}

@@ -137,11 +137,16 @@ a{
 .productos{
 
  width: 250px;
-  height: 400px;
-  border: solid gray 3px;
+  height: 275px;
+  border: solid rgb(232, 229, 229) 3px;
   align-items: center;
   text-align: center;
-  
+  border-radius: 10px;
+  font-size: 11px;
+  padding-top: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+ color: rgb(83, 79, 79);
+    
   
 
 }
@@ -160,6 +165,7 @@ a{
   z-index: 1000;
   justify-content: center;
   align-items: center;
+  
 
 
 
@@ -177,6 +183,9 @@ a{
   /* max-width: 90px; */
   width: 800px ;
   position: relative;
+  
+
+
  
 }
 

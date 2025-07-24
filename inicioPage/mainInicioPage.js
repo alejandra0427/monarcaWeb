@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
     const contenedorVodka = document.getElementById('contenedorVodka');
     const contenedorVino = document.getElementById('contenedorVino');
     const contenedorCocteles = document.getElementById('contenedorCocteles');
-    const contenedorOtrosLicores =document.getElementById('contenedorOtrosLicores');
+    const contenedorOtrosLicores = document.getElementById('contenedorOtrosLicores');
     const contenedorConfiteria = document.getElementById('contenedorConfiteria');
     const contenedorOtrasBebidas = document.getElementById('contenedorOtrasBebidas');
     const cajaInformacion = document.getElementById('cajaInformacion');
@@ -26,12 +26,14 @@ window.addEventListener('load', () => {
     const etiquetaValor = document.getElementById('etiquetaValor');
     const numeroContador = document.getElementById('numeroContador');
     const opcion1 = document.getElementById('opcion1');
-    const opcion2 = document.getElementById('opcion2'); 
+    const opcion2 = document.getElementById('opcion2');
+    const op1lb = document.getElementById('op1lb');
+    const op2lb = document.getElementById('op2lb');
 
 
 
 
-    
+
     const btnCerveza = document.getElementById('btnCerveza');
     const btnAguardiente = document.getElementById('btnAguardiente');
     const btnRon = document.getElementById('btnRon');
@@ -74,6 +76,8 @@ window.addEventListener('load', () => {
 
                 if (String(producto.tipo_producto) === "Cerveza") {
 
+                   
+
                     const cajaCerveza = document.createElement('div');
                     cajaCerveza.classList.add('productos');
 
@@ -88,11 +92,11 @@ window.addEventListener('load', () => {
                     cajaCerveza.appendChild(imagen);
 
                     const precio = document.createElement('h2');
-                    precio.textContent = ('$'+producto.valor_producto);
+                    precio.textContent = ('$' + producto.valor_producto);
                     cajaCerveza.appendChild(precio);
 
 
-                   contenedorCervezas.appendChild(cajaCerveza);
+                    contenedorCervezas.appendChild(cajaCerveza);
 
                     const copiaImagen = imagen.cloneNode(true);
                     const copiaTitulo = titulo.cloneNode(true);
@@ -102,7 +106,7 @@ window.addEventListener('load', () => {
 
                     cajaCerveza.addEventListener('click', () => {
 
-                         if (currentIncrementHandler) {
+                        if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
                         if (currentDecrementHandler) {
@@ -114,58 +118,58 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                 numeroContador.value = '0';
+                        numeroContador.value = '0';
 
                         openModal();
 
-                copiaImagen.style.width='400px';
-                copiaImagen.style.heigth='400px';
-                cajaProductoImagen.appendChild(copiaImagen);
-                cajaProductoInformacion.appendChild(copiaTitulo);
-                cajaProductoInformacion.appendChild(linea);
-                cajaProductoInformacion.appendChild(copiaPrecio);
-                cajaProductoInformacion.appendChild(cajaCheck);
-                cajaCheck.style.display='block';
-                cajaProductoInformacion.appendChild(cajaContador);
-                cajaContador.style.display='flex'
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
 
-                precio6Pack.textContent = (producto.valor_producto);
-                const calculoOpcion2 = producto.valor_producto*4;
-                precio24Pack.textContent = (calculoOpcion2);
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
 
-                 
 
-                 etiquetaValor.textContent= ('Agregar $'+producto.valor_producto);
-                
-                
 
-                function actualizarValorTotal() {
-                
-                    const cantidad = parseInt(numeroContador.value) || 0;
-                    const nuevoTotal = producto.valor_producto * cantidad;
-                    etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
-                }
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
-                function actualizarValorTotalOp2(){
-                    
-                    const cantidad = parseInt(numeroContador.value)||0;
-                    const nuevoTotal  = calculoOpcion2 *cantidad;
-                    etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
-                }
 
-                const handleIncrement = () => {
-                      numeroContador.value = parseInt(numeroContador.value) + 1;
-                      opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                         };
 
-                const handleDecrement = () => {
-                         let valorActual = parseInt(numeroContador.value) || 0;
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
                             if (valorActual > 0) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
                         };
-                   
+
                         currentIncrementHandler = handleIncrement;
                         currentDecrementHandler = handleDecrement;
                         currentOpcion1Handler = actualizarValorTotal;
@@ -176,10 +180,10 @@ window.addEventListener('load', () => {
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
 
-                         actualizarValorTotal();
-                
+                        actualizarValorTotal();
 
-                        
+
+
 
 
                     });
@@ -190,17 +194,18 @@ window.addEventListener('load', () => {
 
                             closeModal();
 
-            cajaProductoImagen.removeChild(copiaImagen);
-            cajaProductoInformacion.removeChild(copiaTitulo);
-            cajaProductoInformacion.removeChild(copiaPrecio);
-            cajaProductoInformacion.removeChild(linea);
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
 
                         }
                     });
 
 
                 } else if (String(producto.tipo_producto) === 'Aguardiente') {
-
+                    
+                    
 
                     const cajaAguardiente = document.createElement('div');
                     cajaAguardiente.classList.add('productos');
@@ -216,23 +221,23 @@ window.addEventListener('load', () => {
                     cajaAguardiente.appendChild(imagen);
 
                     const precio = document.createElement('h2');
-                    precio.textContent = ('$'+producto.valor_producto);
+                    precio.textContent = ('$' + producto.valor_producto);
                     cajaAguardiente.appendChild(precio);
 
                     contenedorAguardiente.appendChild(cajaAguardiente);
 
-                    //PUTNO DE REFERENCIA
-                    
-            const copiaImagen = imagen.cloneNode(true);
-            const copiaTitulo = titulo.cloneNode(true);
-            const copiaPrecio = precio.cloneNode(true);
-            const linea = document.createElement('hr');
 
-           
-                 
-            cajaAguardiente.addEventListener('click',()=>{
 
-                  if (currentIncrementHandler) {
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+
+
+                    cajaAguardiente.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
                         if (currentDecrementHandler) {
@@ -244,58 +249,58 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                 numeroContador.value = '0';
+                        numeroContador.value = '0';
 
-                openModal();
+                        openModal();
 
-                copiaImagen.style.width='400px';
-                copiaImagen.style.heigth='400px';
-                cajaProductoImagen.appendChild(copiaImagen);
-                cajaProductoInformacion.appendChild(copiaTitulo);
-                cajaProductoInformacion.appendChild(linea);
-                cajaProductoInformacion.appendChild(copiaPrecio);
-                cajaProductoInformacion.appendChild(cajaCheck);
-                cajaCheck.style.display='block';
-                cajaProductoInformacion.appendChild(cajaContador);
-                cajaContador.style.display='flex'
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
 
-                precio6Pack.textContent = (producto.valor_producto);
-                const calculoOpcion2 = producto.valor_producto*4;
-                precio24Pack.textContent = (calculoOpcion2);
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
 
-                 
 
-                 etiquetaValor.textContent= ('Agregar $'+producto.valor_producto);
-                
-                
 
-                function actualizarValorTotal() {
-                
-                    const cantidad = parseInt(numeroContador.value) || 0;
-                    const nuevoTotal = producto.valor_producto * cantidad;
-                    etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
-                }
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
-                function actualizarValorTotalOp2(){
-                    
-                    const cantidad = parseInt(numeroContador.value)||0;
-                    const nuevoTotal  = calculoOpcion2 *cantidad;
-                    etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
-                }
 
-                const handleIncrement = () => {
-                      numeroContador.value = parseInt(numeroContador.value) + 1;
-                      opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                         };
 
-                const handleDecrement = () => {
-                         let valorActual = parseInt(numeroContador.value) || 0;
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
                             if (valorActual > 0) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
                         };
-                   
+
                         currentIncrementHandler = handleIncrement;
                         currentDecrementHandler = handleDecrement;
                         currentOpcion1Handler = actualizarValorTotal;
@@ -306,31 +311,28 @@ window.addEventListener('load', () => {
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
 
-                         actualizarValorTotal();
-                
+                        actualizarValorTotal();
 
-            });
 
-           
+                    });
 
 
 
-            window.addEventListener('click', (event)=>{
-              
-        if(event.target === cajaInformacion){
 
-            closeModal();
 
-            cajaProductoImagen.removeChild(copiaImagen);
-            cajaProductoInformacion.removeChild(copiaTitulo);
-            cajaProductoInformacion.removeChild(copiaPrecio);
-            cajaProductoInformacion.removeChild(linea);
+                    window.addEventListener('click', (event) => {
 
-            
+                        if (event.target === cajaInformacion) {
 
-            
-        }
-      });
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
 
 
 
@@ -356,7 +358,107 @@ window.addEventListener('load', () => {
 
                     contenedorRon.appendChild(cajaRon);
 
-                    
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+                    cajaRon.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
+
+
 
                 } else if (String(producto.tipo_producto) === 'Tequila') {
 
@@ -380,6 +482,109 @@ window.addEventListener('load', () => {
 
                     contenedorTequila.appendChild(cajaTequila);
 
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+
+                    cajaTequila.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
+
+
+
                 } else if (String(producto.tipo_producto) === 'Whisky') {
 
 
@@ -401,6 +606,106 @@ window.addEventListener('load', () => {
                     cajaWhisky.appendChild(precio);
 
                     contenedorWhisky.appendChild(cajaWhisky);
+
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+                    cajaWhisky.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+                    });
+
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
 
                 } else if (String(producto.tipo_producto) === 'Vodka') {
 
@@ -424,6 +729,105 @@ window.addEventListener('load', () => {
 
                     contenedorVodka.appendChild(cajaVodka);
 
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+                    cajaVodka.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+                        }
+                    });
+
+
+
                 } else if (String(producto.tipo_producto) === 'Vino') {
 
 
@@ -446,6 +850,103 @@ window.addEventListener('load', () => {
 
                     contenedorVino.appendChild(cajaVino);
 
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+                    cajaVino.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+                        }
+                    });
+
+
                 } else if (String(producto.tipo_producto) === 'Cocteles') {
 
 
@@ -467,8 +968,107 @@ window.addEventListener('load', () => {
                     cajaCocteles.appendChild(precio);
 
                     contenedorCocteles.appendChild(cajaCocteles);
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
 
-                }else if (String(producto.tipo_producto) === 'Otros Licores') {
+                    cajaCocteles.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
+
+                } else if (String(producto.tipo_producto) === 'Otros Licores') {
 
 
                     const cajaOtrosLicores = document.createElement('div');
@@ -476,7 +1076,7 @@ window.addEventListener('load', () => {
 
                     const titulo = document.createElement('h1');
                     titulo.textContent = producto.nombre_producto;
-                   cajaOtrosLicores.appendChild(titulo);
+                    cajaOtrosLicores.appendChild(titulo);
 
                     const imagen = document.createElement('img');
                     const linkImagen = producto.imagen_producto;
@@ -490,7 +1090,105 @@ window.addEventListener('load', () => {
 
                     contenedorOtrosLicores.appendChild(cajaOtrosLicores);
 
-                }else if (String(producto.tipo_producto) === 'Confiteria') {
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+                    cajaOtrosLicores.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
+
+                } else if (String(producto.tipo_producto) === 'Confiteria') {
 
 
                     const cajaConfiteria = document.createElement('div');
@@ -498,7 +1196,7 @@ window.addEventListener('load', () => {
 
                     const titulo = document.createElement('h1');
                     titulo.textContent = producto.nombre_producto;
-                   cajaConfiteria.appendChild(titulo);
+                    cajaConfiteria.appendChild(titulo);
 
                     const imagen = document.createElement('img');
                     const linkImagen = producto.imagen_producto;
@@ -510,9 +1208,105 @@ window.addEventListener('load', () => {
                     precio.textContent = producto.valor_producto;
                     cajaConfiteria.appendChild(precio);
 
-                   contenedorConfiteria.appendChild(cajaConfiteria);
+                    contenedorConfiteria.appendChild(cajaConfiteria);
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
 
-                }else if (String(producto.tipo_producto) === 'Otras Bebidas') {
+                    cajaConfiteria.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
+
+                } else if (String(producto.tipo_producto) === 'Otras Bebidas') {
 
 
                     const cajaOtrasBebidas = document.createElement('div');
@@ -520,7 +1314,7 @@ window.addEventListener('load', () => {
 
                     const titulo = document.createElement('h1');
                     titulo.textContent = producto.nombre_producto;
-                   cajaOtrasBebidas.appendChild(titulo);
+                    cajaOtrasBebidas.appendChild(titulo);
 
                     const imagen = document.createElement('img');
                     const linkImagen = producto.imagen_producto;
@@ -532,10 +1326,106 @@ window.addEventListener('load', () => {
                     precio.textContent = producto.valor_producto;
                     cajaOtrasBebidas.appendChild(precio);
 
-                   contenedorOtrasBebidas.appendChild( cajaOtrasBebidas);
+                    contenedorOtrasBebidas.appendChild(cajaOtrasBebidas);
+
+                    const copiaImagen = imagen.cloneNode(true);
+                    const copiaTitulo = titulo.cloneNode(true);
+                    const copiaPrecio = precio.cloneNode(true);
+                    const linea = document.createElement('hr');
+
+                    cajaOtrasBebidas.addEventListener('click', () => {
+
+                        if (currentIncrementHandler) {
+                            btnIncrementar.removeEventListener('click', currentIncrementHandler);
+                        }
+                        if (currentDecrementHandler) {
+                            btnDecrementar.removeEventListener('click', currentDecrementHandler);
+                        }
+                        if (currentOpcion1Handler) {
+                            opcion1.removeEventListener('click', currentOpcion1Handler);
+                        }
+                        if (currentOpcion2Handler) {
+                            opcion2.removeEventListener('click', currentOpcion2Handler);
+                        }
+                        numeroContador.value = '0';
+
+                        openModal();
+
+                        copiaImagen.style.width = '400px';
+                        copiaImagen.style.heigth = '400px';
+                        cajaProductoImagen.appendChild(copiaImagen);
+                        cajaProductoInformacion.appendChild(copiaTitulo);
+                        cajaProductoInformacion.appendChild(linea);
+                        cajaProductoInformacion.appendChild(copiaPrecio);
+                        cajaProductoInformacion.appendChild(cajaCheck);
+                        cajaCheck.style.display = 'block';
+                        cajaProductoInformacion.appendChild(cajaContador);
+                        cajaContador.style.display = 'flex'
+
+                        precio6Pack.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 4;
+                        precio24Pack.textContent = (calculoOpcion2);
+
+                        etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
+
+                        function actualizarValorTotal() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = producto.valor_producto * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        function actualizarValorTotalOp2() {
+
+                            const cantidad = parseInt(numeroContador.value) || 0;
+                            const nuevoTotal = calculoOpcion2 * cantidad;
+                            etiquetaValor.textContent = 'Agregar $' + nuevoTotal;
+                        }
+
+                        const handleIncrement = () => {
+                            numeroContador.value = parseInt(numeroContador.value) + 1;
+                            opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                        };
+
+                        const handleDecrement = () => {
+                            let valorActual = parseInt(numeroContador.value) || 0;
+                            if (valorActual > 0) {
+                                numeroContador.value = valorActual - 1;
+                                opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
+                            }
+                        };
+
+                        currentIncrementHandler = handleIncrement;
+                        currentDecrementHandler = handleDecrement;
+                        currentOpcion1Handler = actualizarValorTotal;
+                        currentOpcion2Handler = actualizarValorTotalOp2;
+
+                        btnIncrementar.addEventListener('click', currentIncrementHandler);
+                        btnDecrementar.addEventListener('click', currentDecrementHandler);
+                        opcion1.addEventListener('click', currentOpcion1Handler);
+                        opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        actualizarValorTotal();
+
+
+                    });
+
+
+                    window.addEventListener('click', (event) => {
+
+                        if (event.target === cajaInformacion) {
+
+                            closeModal();
+
+                            cajaProductoImagen.removeChild(copiaImagen);
+                            cajaProductoInformacion.removeChild(copiaTitulo);
+                            cajaProductoInformacion.removeChild(copiaPrecio);
+                            cajaProductoInformacion.removeChild(linea);
+
+                        }
+                    });
+
                 }
-
-
             }
 
 
@@ -841,7 +1731,7 @@ window.addEventListener('load', () => {
 
     });
 
-     btnOtrasBebidas.addEventListener('click', (e) => {
+    btnOtrasBebidas.addEventListener('click', (e) => {
         e.preventDefault();
         console.log('click');
 

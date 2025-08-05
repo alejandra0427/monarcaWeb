@@ -7,6 +7,7 @@ window.addEventListener('load',()=>{
     const direccion = document.getElementById('direccion');
     const contraseña = document.getElementById('contraseña');
     const boton= document.getElementById('botonEnviar');
+    
 
     boton.addEventListener('click',async (e)=>{
         e.preventDefault();

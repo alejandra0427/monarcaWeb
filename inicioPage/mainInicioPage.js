@@ -1,6 +1,15 @@
 window.addEventListener('load', () => {
 
-    console.log('funcionando');
+
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('usercompartido');
+
+    if (userId) {
+        console.log('Usuario Actualmente en sesión:', userId);
+
+    }
 
 
 
@@ -16,21 +25,18 @@ window.addEventListener('load', () => {
     const contenedorConfiteria = document.getElementById('contenedorConfiteria');
     const contenedorOtrasBebidas = document.getElementById('contenedorOtrasBebidas');
     const cajaInformacion = document.getElementById('cajaInformacion');
-    const cajaDetalleProducto = document.getElementById('cajaDetalleProducto');
     const cajaProductoImagen = document.getElementById('cajaProductoImagen');
     const cajaProductoInformacion = document.getElementById('cajaProductoInformacion');
     const cajaCheck = document.getElementById('cajaCheck');
     const cajaContador = document.getElementById('cajaContador');
-    const precio6Pack = document.getElementById('precio6Pack');
-    const precio24Pack = document.getElementById('precio24Pack');
+    const precioOpcion1 = document.getElementById('precioOpcion1');
+    const precioOpcion2 = document.getElementById('precioOpcion2');
     const etiquetaValor = document.getElementById('etiquetaValor');
     const numeroContador = document.getElementById('numeroContador');
     const opcion1 = document.getElementById('opcion1');
     const opcion2 = document.getElementById('opcion2');
     const op1lb = document.getElementById('op1lb');
     const op2lb = document.getElementById('op2lb');
-
-
 
 
 
@@ -47,12 +53,19 @@ window.addEventListener('load', () => {
     const btnOtrasBebidas = document.getElementById('btnOtrasBebidas');
     const btnIncrementar = document.getElementById('incrementar');
     const btnDecrementar = document.getElementById('decrementar');
+    const btnCajaValorTotal = document.getElementById('cajaValorTotal')
+    const btnCar = document.getElementById('btnCar');
 
     let currentIncrementHandler = null;
     let currentDecrementHandler = null;
     let currentOpcion1Handler = null;
     let currentOpcion2Handler = null;
 
+
+    btnCar.addEventListener('click', () => {
+
+        window.location.href = `../cart/cart.html?usercompartido=${userId}`;
+    });
 
 
 
@@ -72,11 +85,15 @@ window.addEventListener('load', () => {
             const response = await fetch('http://localhost:3000/productos');
             const data = await response.json();
 
+            let productoSeleccionado = null;
+            let etiquetaValorNumerico = 0;
+
+
             for (const producto of data) {
 
                 if (String(producto.tipo_producto) === "Cerveza") {
 
-                   
+                    const idProducto = producto.id_producto;
 
                     const cajaCerveza = document.createElement('div');
                     cajaCerveza.classList.add('productos');
@@ -106,6 +123,17 @@ window.addEventListener('load', () => {
 
                     cajaCerveza.addEventListener('click', () => {
 
+
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Pack x 6');
+                        op2lb.textContent = ('Pack x 24');
+
+
+
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -118,7 +146,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -133,9 +161,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
+                        precioOpcion1.textContent = (producto.valor_producto);
                         const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
 
 
@@ -164,7 +192,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -179,6 +207,13 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+
+                        etiquetaValorNumerico = etiquetaValor.textContent;
+
+
+
 
                         actualizarValorTotal();
 
@@ -204,8 +239,8 @@ window.addEventListener('load', () => {
 
 
                 } else if (String(producto.tipo_producto) === 'Aguardiente') {
-                    
-                    
+
+                    const idProducto = producto.id_producto;
 
                     const cajaAguardiente = document.createElement('div');
                     cajaAguardiente.classList.add('productos');
@@ -237,6 +272,13 @@ window.addEventListener('load', () => {
 
                     cajaAguardiente.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -249,7 +291,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -264,9 +306,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
-                        const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion1.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto - (producto.valor_producto * 0.46);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
 
 
@@ -295,7 +337,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -310,6 +352,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -338,6 +383,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Ron') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaRon = document.createElement('div');
                     cajaRon.classList.add('productos');
@@ -365,6 +411,13 @@ window.addEventListener('load', () => {
 
                     cajaRon.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -377,7 +430,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -392,9 +445,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
-                        const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion1.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto - (producto.valor_producto * 0.46);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
@@ -421,7 +474,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -436,6 +489,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -462,6 +518,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Tequila') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaTequila = document.createElement('div');
                     cajaTequila.classList.add('productos');
@@ -490,6 +547,13 @@ window.addEventListener('load', () => {
 
                     cajaTequila.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -502,7 +566,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -517,9 +581,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
-                        const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion1.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto - (producto.valor_producto * 0.46);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
 
 
@@ -547,7 +611,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -562,6 +626,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -587,6 +654,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Whisky') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaWhisky = document.createElement('div');
                     cajaWhisky.classList.add('productos');
@@ -614,6 +682,13 @@ window.addEventListener('load', () => {
 
                     cajaWhisky.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -626,7 +701,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -641,9 +716,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
-                        const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion1.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto - (producto.valor_producto * 0.46);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
@@ -670,7 +745,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -685,6 +760,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -709,6 +787,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Vodka') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaVodka = document.createElement('div');
                     cajaVodka.classList.add('productos');
@@ -736,6 +815,13 @@ window.addEventListener('load', () => {
 
                     cajaVodka.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -748,7 +834,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -763,9 +849,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
+                        precioOpcion1.textContent = (producto.valor_producto);
                         const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
@@ -790,7 +876,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -805,6 +891,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -830,6 +919,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Vino') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaVino = document.createElement('div');
                     cajaVino.classList.add('productos');
@@ -857,6 +947,13 @@ window.addEventListener('load', () => {
 
                     cajaVino.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -869,7 +966,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -884,9 +981,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
+                        precioOpcion1.textContent = (producto.valor_producto);
                         const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
@@ -911,7 +1008,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -926,6 +1023,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -949,6 +1049,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Cocteles') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaCocteles = document.createElement('div');
                     cajaCocteles.classList.add('productos');
@@ -975,6 +1076,14 @@ window.addEventListener('load', () => {
 
                     cajaCocteles.addEventListener('click', () => {
 
+
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Unidad');
+                        op2lb.textContent = ('Pack x 6');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -987,7 +1096,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -1002,9 +1111,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
-                        const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion1.textContent = (producto.valor_producto);
+                        const calculoOpcion2 = producto.valor_producto * 6;
+                        precioOpcion2.textContent = (calculoOpcion2);
 
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
@@ -1031,7 +1140,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -1046,6 +1155,9 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
 
                         actualizarValorTotal();
 
@@ -1070,6 +1182,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Otros Licores') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaOtrosLicores = document.createElement('div');
                     cajaOtrosLicores.classList.add('productos');
@@ -1097,6 +1210,13 @@ window.addEventListener('load', () => {
 
                     cajaOtrosLicores.addEventListener('click', () => {
 
+                        opcion2.style.display = 'inline';
+                        op2lb.style.display = 'inline';
+                        precioOpcion2.style.display = 'inline';
+
+                        op1lb.textContent = ('Una Botella 750ml');
+                        op2lb.textContent = ('Media Botella 325ml');
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -1109,7 +1229,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -1124,9 +1244,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
+                        precioOpcion1.textContent = (producto.valor_producto);
                         const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
@@ -1151,7 +1271,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -1167,7 +1287,12 @@ window.addEventListener('load', () => {
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
 
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
+
                         actualizarValorTotal();
+
+
 
 
                     });
@@ -1190,6 +1315,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Confiteria') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaConfiteria = document.createElement('div');
                     cajaConfiteria.classList.add('productos');
@@ -1216,6 +1342,11 @@ window.addEventListener('load', () => {
 
                     cajaConfiteria.addEventListener('click', () => {
 
+                        op1lb.textContent = 'Unidad';
+                        op2lb.style.display = 'none';
+                        opcion2.style.display = 'none';
+                        precioOpcion2.style.display = 'none';
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -1228,7 +1359,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -1243,9 +1374,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
+                        precioOpcion1.textContent = (producto.valor_producto);
                         const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
@@ -1270,7 +1401,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -1286,7 +1417,12 @@ window.addEventListener('load', () => {
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
 
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
+
                         actualizarValorTotal();
+
+
 
 
                     });
@@ -1308,6 +1444,7 @@ window.addEventListener('load', () => {
 
                 } else if (String(producto.tipo_producto) === 'Otras Bebidas') {
 
+                    const idProducto = producto.id_producto;
 
                     const cajaOtrasBebidas = document.createElement('div');
                     cajaOtrasBebidas.classList.add('productos');
@@ -1335,6 +1472,13 @@ window.addEventListener('load', () => {
 
                     cajaOtrasBebidas.addEventListener('click', () => {
 
+
+
+                        op1lb.textContent = 'Unidad';
+                        op2lb.style.display = 'none';
+                        opcion2.style.display = 'none';
+                        precioOpcion2.style.display = 'none';
+
                         if (currentIncrementHandler) {
                             btnIncrementar.removeEventListener('click', currentIncrementHandler);
                         }
@@ -1347,7 +1491,7 @@ window.addEventListener('load', () => {
                         if (currentOpcion2Handler) {
                             opcion2.removeEventListener('click', currentOpcion2Handler);
                         }
-                        numeroContador.value = '0';
+                        numeroContador.value = '1';
 
                         openModal();
 
@@ -1362,9 +1506,9 @@ window.addEventListener('load', () => {
                         cajaProductoInformacion.appendChild(cajaContador);
                         cajaContador.style.display = 'flex'
 
-                        precio6Pack.textContent = (producto.valor_producto);
+                        precioOpcion1.textContent = (producto.valor_producto);
                         const calculoOpcion2 = producto.valor_producto * 4;
-                        precio24Pack.textContent = (calculoOpcion2);
+                        precioOpcion2.textContent = (calculoOpcion2);
 
                         etiquetaValor.textContent = ('Agregar $' + producto.valor_producto);
 
@@ -1389,7 +1533,7 @@ window.addEventListener('load', () => {
 
                         const handleDecrement = () => {
                             let valorActual = parseInt(numeroContador.value) || 0;
-                            if (valorActual > 0) {
+                            if (valorActual > 1) {
                                 numeroContador.value = valorActual - 1;
                                 opcion1.checked ? actualizarValorTotal() : actualizarValorTotalOp2();
                             }
@@ -1404,6 +1548,10 @@ window.addEventListener('load', () => {
                         btnDecrementar.addEventListener('click', currentDecrementHandler);
                         opcion1.addEventListener('click', currentOpcion1Handler);
                         opcion2.addEventListener('click', currentOpcion2Handler);
+
+                        productoSeleccionado = idProducto;
+                        etiquetaValorNumerico = etiquetaValor.textContent;
+
 
                         actualizarValorTotal();
 
@@ -1425,8 +1573,68 @@ window.addEventListener('load', () => {
                         }
                     });
 
+
+
+
                 }
+
             }
+
+            btnCajaValorTotal.addEventListener('click', async (e) => {
+
+                e.preventDefault();
+                
+                
+                
+                const pedido = {
+
+                    id_usuario: userId,
+                    producto: productoSeleccionado,
+                    cantidad_productos: numeroContador.value,
+                    valor_pedido: etiquetaValorNumerico.replace('Agregar $', ''),
+
+                    }
+
+                
+
+                
+
+
+
+                console.log(pedido);
+
+
+
+                try {
+
+                    const response = await fetch('http://localhost:3000/carro', {
+
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(pedido)
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+
+                        throw new Error(data.error || 'Error en el servidor');
+                    }
+
+                    console.log('Producto agregado al carro Extitosamente', data);
+                    alert('Producto agregado Exitosamente');
+
+
+
+                } catch (err) {
+
+                    console.error('Error al agregar producto al carro:', err);
+                    alert('Error al agregar producto al carro: ' + err.message);
+
+                }
+            });
 
 
         } catch (err) {
@@ -1437,6 +1645,9 @@ window.addEventListener('load', () => {
     }
 
     carga();
+
+
+
 
     btnCerveza.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1760,7 +1971,7 @@ window.addEventListener('load', () => {
 
     });
 
-
+   
 
 
 });

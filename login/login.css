@@ -1,17 +1,11 @@
 
-@font-face {
-    font-family:"inter";
-    src: url(fonts/Inter/Inter-Italic-VariableFont_opsz\,wght.ttf);
-    font-weight: normal;
-    font-style: normal;
+   
+.playwrite-hu {
+  font-family: 'Playwrite HU', cursive;
+  font-weight: 100; /* Puedes cambiar el peso a 100, 200, 400 según te guste */
 }
 
-@font-face {
-    font-family:"Open_sans" ;
-    src: url(fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth\,wght.ttf);
-    font-weight: normal;
-    font-style: normal;
-}    
+
 :root{
 
  --dark-brown: hsl(25, 77%, 39%);
@@ -22,6 +16,9 @@
 --very-light-gray: hsl(0, 0%, 98%);
 --white: hsl(0, 0%, 100%);
 --lightorange: hsl(29, 55%, 64%);
+}
+body {
+  font-family: 'Playwrite HU', cursive;
 }
 
 *{
@@ -100,6 +97,7 @@ input{
     background: var(--lightorange);
     color: white;
     border:  1px solid rgb(206, 83, 7);
+    
 }
 
 hr{
@@ -108,7 +106,7 @@ hr{
 }
 
 .formu{
-    padding-top: 60px;
+    padding-top: 30px;
     
 }
 
@@ -120,7 +118,7 @@ hr{
     width:1910px;
     height: 200px ;
     /* border: 2px solid black; */
-    padding-top: 50px;
+    padding-top: 30px;
     text-align: center;
     color: var(--grayish-blue);
     font-family: Open_sans;

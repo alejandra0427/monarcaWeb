@@ -21,8 +21,11 @@ window.addEventListener('load',()=>{
        
          
             if(userValidation){
-
-                window.location.href ="../inicioPage/inicioPage.html";
+                
+                const usercompartido = userValidation.id_usuario;
+                window.location.href =`../inicioPage/inicioPage.html?usercompartido=${usercompartido}`;
+                
+                
             }else{
 
                 alert('usuario o contraseña incorrecta')

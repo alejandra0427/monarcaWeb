@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
             const usuarioExiste = data.find(usuario => usuario.email === email.value.trim());
 
             if (usuarioExiste) {
-                // Aquí iría la lógica para enviar el correo de recuperación (si tienes backend)
+                
                 mostrarMensaje('Enviamos recuperación de contraseña a su correo.', true);
             } else {
                 mostrarMensaje('Correo no registrado en el sistema.', false);

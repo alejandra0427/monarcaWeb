@@ -116,7 +116,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-//Esto es lo que corresponde a producots
+//Esto es lo que corresponde a productos
 
 app.get('/productos', async (req, res)=>{
 

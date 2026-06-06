@@ -390,8 +390,6 @@ app.delete('/eliminar-pedido/:id_pedido', async (req, res) => {
 });
 
 
-
-
 app.listen(port,()=>{
 
     console.log(`Servidor escuchando en port ${port}`);
